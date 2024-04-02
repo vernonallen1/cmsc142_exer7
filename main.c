@@ -1,3 +1,7 @@
+// Fajilan, Vernon Allen F.
+// Flauta, Chesedh L.
+// EF - 1L
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -92,9 +96,9 @@ void fillTable(int **table, int arr[], int n, int k) {
     }
 }
 
-int* traceSubset(int **table, int arr[], int n, int k) {
+int traceSubset(int *subset, int **table, int arr[], int n, int k) {
     // printTable(table, arr, n, k);
-    int *subset = (int*) malloc(n*sizeof(int));;
+    
     int subsetCount = 0;
 
     int i;
@@ -107,7 +111,7 @@ int* traceSubset(int **table, int arr[], int n, int k) {
     }
 
     if (subsetCount == 0) {
-        return subset;
+        return 0;
     }
 
     int current_col = k;
@@ -124,7 +128,7 @@ int* traceSubset(int **table, int arr[], int n, int k) {
         } 
     }
 
-    return sliceArray(subset, subsetCount);
+    return subsetCount;
 
 }
 
@@ -132,7 +136,7 @@ int* traceSubset(int **table, int arr[], int n, int k) {
 int main() {
     int array[] = {3, 2, 9, 7, 5};
     int n = 5;
-    int k = 21;
+    int k = 24;
     sort(array, n);
     printf("Array: \n");
     printArray(array, n);
@@ -154,12 +158,13 @@ int main() {
     printf("\n");
 
     //track down the numbers that make up the subset
-    int *subset = traceSubset(subsetTable, array, n, k);
+    int *subset = (int*) malloc(n*sizeof(int));
+    int subsetCount = traceSubset(subset, subsetTable, array, n, k);
     
     //
     if (subset[0]) {
         printf("A subset of the array that add up to %d is: ", k);
-        printSubsetArray(subset, n);
+        printSubsetArray(subset, subsetCount);
     } else {
         printf("No subset was found!\n");
     }
